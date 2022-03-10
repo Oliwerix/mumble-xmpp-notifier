@@ -17,3 +17,5 @@ A small python script to notify users over xmpp if a person joins a mumble serve
     subscribers: # subscriber jids
       - person@example.net
       - john.doe@example.net
+## Running as a service
+There is a provided systemd service file, copy it to your systemd directory (`/etc/systemd/system/`), and modify the working directory and executable path. Then run `systemctl daemon-reload` and `systemctl enable --now mumble-xmpp-notifier`
