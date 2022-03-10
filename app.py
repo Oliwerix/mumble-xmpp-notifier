@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import socket, xmpp, datetime
 from struct import pack, unpack 
-from time import sleep
+from time import time, sleep
 from yaml import safe_load
 
 
@@ -45,13 +45,13 @@ def send_message(receivers: list, message: str, jabberid: str, password: str) ->
 def get_users(address: str, port: int) -> tuple:
     "Gets the number of users and max users on a mumble server"
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.settimeout(1)
+    s.settimeout(2)
     buf = pack(">iQ", 0, datetime.datetime.now().microsecond)
     s.sendto(buf, (address, port))
     try:
         data, addr = s.recvfrom(1024)
     except socket.timeout:
-        print(f"Socket timeout: {time.time()}:NaN:NaN")
+        print(f"Socket timeout: {time()}:NaN:NaN")
         return (0,0)
     r = unpack(">bbbbQiii", data)
     users = r[5]
