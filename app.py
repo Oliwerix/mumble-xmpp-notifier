@@ -15,7 +15,11 @@ def main():
     while 1:
         users, maxusers = get_users(mumble_server, mumble_port)
         if users > oldusers: # notify only if increase
-            send_message(config["subscribers"], f"Mumble {mumble_server}: {users}/{maxusers} users", config["xmpp_jid"], config["xmpp_password"])
+            send_message(
+                    config["subscribers"], 
+                    f"Mumble {mumble_server}: {users}/{maxusers} users, (+{users-oldusers})", 
+                    config["xmpp_jid"], 
+                    config["xmpp_password"])
         oldusers = users
         sleep(config["polling_rate"])
 
