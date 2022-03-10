@@ -11,13 +11,13 @@ def main():
     mumble_server = config["mumble_server"]
     mumble_port = config["mumble_port"]
     oldusers, maxusers = get_users(mumble_server, mumble_port)
-    polling_rate = 1 # polling rate delay in seconds
+    print("started server")
     while 1:
         users, maxusers = get_users(mumble_server, mumble_port)
         if users > oldusers: # notify only if increase
             send_message(config["subscribers"], f"Mumble {mumble_server}: {users}/{maxusers} users", config["xmpp_jid"], config["xmpp_password"])
         oldusers = users
-        sleep(polling_rate)
+        sleep(config["polling_rate"])
 
 def send_message(receivers, message, jabberid, password):
     "Send xmpp message to receiver"

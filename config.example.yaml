@@ -2,6 +2,7 @@ xmpp_jid: bot@example.net
 xmpp_password: hackme123
 mumble_server: mumble.example.net 
 mumble_port: 64738
-subscribers:
+polling_rate: 5 # delay in seconds
+subscribers: # subscriber jids
   - person@example.net
   - john.doe@example.net
