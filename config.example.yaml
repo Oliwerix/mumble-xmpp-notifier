@@ -1,0 +1,7 @@
+xmpp_jid: bot@example.net 
+xmpp_password: hackme123
+mumble_server: mumble.example.net 
+mumble_port: 64738
+subscribers:
+  - person@example.net
+  - john.doe@example.net
