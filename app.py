@@ -19,7 +19,11 @@ def main():
     oldusers, maxusers = get_users(mumble_server, mumble_port)
     print("started")
     while 1:
-        users, maxusers = get_users(mumble_server, mumble_port)
+        try:
+            users, maxusers = get_users(mumble_server, mumble_port)
+        except socket.timeout:
+            print("timeout")
+            users = oldusers
         if users > oldusers: # notify only if user count increases
             send_message(
                     subscribers, 
@@ -48,11 +52,7 @@ def get_users(address: str, port: int) -> tuple:
     s.settimeout(2)
     buf = pack(">iQ", 0, datetime.datetime.now().microsecond)
     s.sendto(buf, (address, port))
-    try:
-        data, addr = s.recvfrom(1024)
-    except socket.timeout:
-        print(f"Socket timeout: {time()}:NaN:NaN")
-        return (0,0)
+    data, addr = s.recvfrom(1024)
     r = unpack(">bbbbQiii", data)
     users = r[5]
     max_users = r[6]
